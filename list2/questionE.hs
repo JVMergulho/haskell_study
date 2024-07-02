@@ -1,3 +1,6 @@
+-- Dada uma lista de inteiros, essa função retorna uma nova lista, apenas com os elementos da lista original 
+-- que não são divisores exatos de qualquer dos elementos posteriores a eles.
+
 primos :: [Int] -> [Int]
 primos [] = []
 primos [x] = [x]
