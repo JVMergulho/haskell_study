@@ -39,3 +39,6 @@ makeList n m
 -- add elements of a list of pairs using list comprehension
 addPairs:: [(Int, Int)] -> [Int]
 addPairs xs = [a + b | (a, b) <- xs] 
+
+addPairs2:: [(Int, Int)] -> [Int]
+addPairs2 = map (\(a,b) -> a + b)

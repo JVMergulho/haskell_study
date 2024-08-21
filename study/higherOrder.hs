@@ -23,4 +23,4 @@ descSort = reverse . sort
 
 squareEven :: [Int] -> [Int]
 squareEven = map (\x -> x * x) . filter even 
--- even is equivalent to /x -> x `mod` 2 == 0
+-- even is equivalent to \x -> x `mod` 2 == 0
