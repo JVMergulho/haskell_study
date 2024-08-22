@@ -5,7 +5,10 @@
 -- saque para definir deposito
 -- (c) saque2, uma modifica ̧c ̃ao da fun ̧c ̃ao saque, que bloqueia, caso o saldo da conta v ́a se tornar
 -- negativo.
+-- (d) Suponha que você possa retirar dinheiro de uma conta A se esta tiver saldo suficiente, senão, retira de uma conta B. Defina a função saque3, utilizando a função orElse e a função saque2.
+
 import Control.Concurrent.STM
+import Control.Concurrent
 
 type Conta = TVar Int
 
@@ -27,3 +30,18 @@ saque2 conta quantia = do
     then retry
     else writeTVar conta (saldo - quantia)
 
+-- d)
+saque3 :: Conta -> Conta -> Int -> STM()
+saque3 contaA contaB quantia = do
+    orElse (saque2 contaA quantia) (saque2 contaB quantia)
+
+main:: IO() 
+main = do
+    conta <- atomically $ newTVar 400 -- newTVarIO 100
+    atomically $ deposito conta 100
+    forkIO $ atomically $ saque2 conta 600
+    forkIO $ atomically $ deposito conta 1000
+    threadDelay 1000000
+    saldo <- atomically $ readTVar conta
+    print saldo
+    return ()
